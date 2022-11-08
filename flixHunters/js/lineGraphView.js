@@ -17,13 +17,14 @@ class LineGraphView {
       .style('height',this.height)
 
     this.adjustGraph(this.globalApplicationState.allMovieData);
+    
 
     
   }
 
   adjustGraph(data){
 
- 
+    console.log(data)
 
   }
 
