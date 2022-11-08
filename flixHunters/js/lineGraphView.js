@@ -22,24 +22,30 @@ class LineGraphView {
     let dataByYearAdded = d3.group(this.globalApplicationState.allMovieData, d => d.year_added)
 
     this.adjustGraph(dataByYearAdded);
-    let years = []
-    for(let key in [...dataByYearAdded.keys()]) {
-      years.push(parseInt([...dataByYearAdded.keys()][key]))
-    }
-    
     
     this.xScale = d3.scaleTime()
-      .domain([d3.min(years), d3.max(years)])
+      .domain(d3.extent([...dataByYearAdded.keys()].map(d => new Date(d))))
       .range([0, this.width - this.yAxisPadding])
 
-      console.log(this.xScale('2022'))
-
+    
     lineGraphSVG.select('#x-axis')
       .append('g')
       .attr('transform', `translate(${this.yAxisPadding}, ${this.height - this.xAxisPadding})`)
       .call(d3.axisBottom(this.xScale)
         .tickFormat(d3.timeFormat('%Y'))
       );
+
+    // gets the length of the largest array of values
+    let maxCount = d3.max([...dataByYearAdded.values()].map(d => d.length))
+    
+    this.yScale = d3.scaleLinear()
+      .domain([0, maxCount])
+      .range([this.height - this.xAxisPadding, 10])
+      .nice();
+    lineGraphSVG.select('#y-axis')
+      .append('g')
+      .attr('transform', `translate(${this.yAxisPadding},0)`)
+      .call(d3.axisLeft(this.yScale));
     
   }
 
