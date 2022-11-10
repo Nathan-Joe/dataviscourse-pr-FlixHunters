@@ -21,7 +21,7 @@ class LineGraphView {
     
     let dataByYearAdded = d3.group(this.globalApplicationState.allMovieData, d => d.year_added)
 
-    this.adjustGraph(dataByYearAdded);
+    
     
     this.xScale = d3.scaleTime()
       .domain(d3.extent([...dataByYearAdded.keys()].map(d => new Date(d))))
@@ -47,11 +47,40 @@ class LineGraphView {
       .attr('transform', `translate(${this.yAxisPadding},0)`)
       .call(d3.axisLeft(this.yScale));
     
+    this.adjustGraph(dataByYearAdded);
   }
 
   adjustGraph(data){
+    let keys = [...data.keys()]
+    let yearCount = []
+    keys.forEach(key => {
+      yearCount.push({
+        year: key,
+        count: data.get(key).length,
+        group: 1
+      })
+    });
+
+    yearCount = d3.group(yearCount, d => d.group)
     
+
+    //console.log(yearCount)
+  
+
     
+
+    d3.select('#lines').selectAll('.lines')
+      .data(yearCount)
+      .join('path')
+      .attr('fill', 'none')
+      .attr('stroke', 'blue')
+      .attr('stroke-width', 1)
+      .attr('d', ([group, values]) => {
+        return d3.line()
+          .x(d => this.xScale(new Date(d.year)) + this.yAxisPadding)
+          .y(d => this.yScale(d.count))
+          (values)
+      })
 
   }
 
