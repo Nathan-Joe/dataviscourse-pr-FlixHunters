@@ -27,7 +27,7 @@ async function loadData () {
         break;
 
       case "NC-17":
-        movie.rating = "X"
+        movie.rating = "R"
         break;
 
       case "R":
