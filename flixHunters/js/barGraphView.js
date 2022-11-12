@@ -18,7 +18,7 @@ class BarGraphView {
       .style('width',this.width)
       .style('height',this.height)
 
-    console.log(this.globalApplicationState.allMovieData)
+    //console.log(this.globalApplicationState.allMovieData)
     let CopyData = []
     let i = 0
     this.globalApplicationState.allMovieData.forEach(d => {
@@ -31,7 +31,7 @@ class BarGraphView {
     let DirectorGroup2 = d3.group(this.globalApplicationState.allMovieData, d => d.director)
 
     let maxCount = d3.max([...DirectorGroup2.values()].map(d => d.length))
-    console.log(maxCount)
+    //console.log(maxCount)
 
     this.xScale = d3.scaleLinear()
       .domain([0, maxCount])
@@ -49,9 +49,9 @@ class BarGraphView {
       .padding(0.2);
     
     d3.select('#ybar-axis')
-    .append('g')
-    .attr('transform', `translate(${this.yAxisPadding},0)`)
-    .call(d3.axisLeft(this.yScale))
+      .append('g')
+      .attr('transform', `translate(${this.yAxisPadding},0)`)
+      .call(d3.axisLeft(this.yScale))
 
 
   }
