@@ -18,17 +18,17 @@ class BarGraphView {
       .style('width',this.width)
       .style('height',this.height)
 
-    console.log(this.globalApplicationState.allMovieData)
+    //console.log(this.globalApplicationState.allMovieData)
 
     let DirectorGroup = d3.group(this.globalApplicationState.allMovieData, d => d.director)
 
     const mapSort1 = new Map([...DirectorGroup.entries()].sort((a, b) => b[1].length - a[1].length));
-    console.log(mapSort1);
+    //console.log(mapSort1);
     
     const map1 = new Map();
     let count = 0;
     for (let [key, value] of mapSort1.entries()) {
-      console.log(key, value);
+      //console.log(key, value);
       if(count<10 && key != ""){
         map1.set(key,value)
         count++
@@ -64,11 +64,24 @@ class BarGraphView {
     .attr('transform', `translate(${this.yAxisPadding+50},${-this.xAxisPadding})`)
     .call(d3.axisLeft(this.yScale))
 
+    d3.select('#xbar-axis')
+      .append('text')
+      .text('Number of movies')
+      .attr('x', 350)
+      .attr('y', this.height - 10);
+
+    d3.select('#ybar-axis')
+      .append('text')
+      .text('Directors')
+      .attr('x', -250)
+      .attr('y', 20)
+      .attr('transform', 'rotate(-90)');
+
     d3.select('#bars').selectAll('rect')
       .data(map1)
       .join('rect')
       .attr("x", 130)
-      .attr("y", ([group, values]) => this.yScale(group)-30)
+      .attr("y", ([group, values]) => this.yScale(group)-32)
       .attr("width", ([group, values]) => this.xScale([values].map(d => d.length)))
       .attr("height", 15)
       .attr("fill", "#69b3a2")
