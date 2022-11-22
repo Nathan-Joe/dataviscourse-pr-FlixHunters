@@ -36,7 +36,7 @@ class LineGraphView {
     this.xScale = d3.scaleTime()
       .domain(d3.extent([...dataByYearAdded.keys()].map(d => new Date(d))))
       //.domain([new Date('2013'), new Date('2021')])
-      .range([0, this.width - this.yAxisPadding])
+      .range([0, this.width - this.yAxisPadding - 1])
 
     
     lineGraphSVG.select('#x-axis')

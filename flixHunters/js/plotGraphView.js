@@ -24,7 +24,7 @@ class PlotGraphView {
     
     this.xScale = d3.scaleLinear()
       .domain(d3.extent(anArray))
-      .range([0, this.width - this.xAxisPadding]).nice();
+      .range([0, this.width - this.xAxisPadding - 50]).nice();
 
     
     lineGraphSVG.select('#x-axis')

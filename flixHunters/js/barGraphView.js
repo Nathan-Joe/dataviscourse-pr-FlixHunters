@@ -57,7 +57,7 @@ class BarGraphView {
 
     this.yScale = d3.scaleBand()
       .domain([...map1.keys()].map(d => d))
-      .range([0, this.height]);
+      .range([this.yAxisPadding, this.height]);
     
     d3.select('#ybar-axis')
     .append('g')
