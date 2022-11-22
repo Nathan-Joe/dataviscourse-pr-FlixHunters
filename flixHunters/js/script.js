@@ -1,12 +1,20 @@
 // ******* DATA LOADING *******
 async function loadData () {
+  let imdbData = await d3.csv('data/imdb_titles.csv');
+
+  //Filter to only have movies for now 
+  imdbData = imdbData.filter(m => m.type == 'MOVIE');
+
   let movieData = await d3.csv('data/netflix_titles.csv');
 
   //Filter to only have movies for now 
   movieData = movieData.filter(m => m.type == 'Movie');
 
-  //Clean up ratings
+  let moviesWithRatings = [];
+
+  //Clean up ratings N^2 algorithms are coolio : )
   for (const movie of movieData) {
+  
     switch(movie.rating){
 
       case "PG-13":
@@ -43,9 +51,30 @@ async function loadData () {
         break;
 
     }
+   
+    for(const movie2 of imdbData){
+      if(movie2.title == movie.title){
+          movie.score = movie2.imdb_score;
+      if(movie.score != '' && movie.score != "" && movie.title != 'Connected')
+        moviesWithRatings.push(movie);
+      }
+    }
+    
   }
+ 
+  return moviesWithRatings;
+}
 
-  return movieData;
+function toggleGraphs(){
+  let graphToTurnOn = document.getElementById("graphToggle").value;
+  if(graphToTurnOn == 'scatter'){
+    d3.select('#scatterGraphSVG').style("display","initial");
+    d3.select('#lineGraphSVG').style("display","none");
+  }
+  else{
+    d3.select('#scatterGraphSVG').style("display","none");
+    d3.select('#lineGraphSVG').style("display","initial");
+  }
 }
 
 
@@ -54,6 +83,7 @@ const globalApplicationState = {
   donutView  : null,
   barGraphView  : null,
   lineGraphView  : null,
+  plotGraphView : null,
   colorScale: null
 };
 
@@ -72,11 +102,13 @@ loadData().then((loadedData) => {
   const barGraphView = new BarGraphView(globalApplicationState);
   const donutView = new DonutView(globalApplicationState);
   const lineGraphView = new LineGraphView(globalApplicationState);
+  const plotGraphView = new PlotGraphView(globalApplicationState);
   
 
   globalApplicationState.barGraphView = barGraphView;
   globalApplicationState.donutView = donutView;
-  globalApplicationState.barGraphView = lineGraphView;
+  globalApplicationState.lineGraphView = lineGraphView;
+  globalApplicationState.plotGraphView = plotGraphView;
   
 });
 

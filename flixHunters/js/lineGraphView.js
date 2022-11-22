@@ -48,7 +48,7 @@ class LineGraphView {
 
     lineGraphSVG.select('#x-axis')
       .append('text')
-      .text('Year')
+      .text('Year Added')
       .attr('x', 350)
       .attr('y', this.height - 10);
 

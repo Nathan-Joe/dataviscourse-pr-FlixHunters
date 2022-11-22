@@ -16,6 +16,8 @@
   <script src="js/lineGraphView.js"></script>
   <script src="js/script.js"></script>
   <script src="js/donutView.js"></script>
+  <script src="js/plotGraphView.js"></script>
+
   
 
 
@@ -28,11 +30,19 @@
             <div>Names: Tayler Tolman, Albert Frei, Gregorius Sukiman</div>
         </header>
     </div>
+    <select name="graphType" id="graphToggle" onchange="toggleGraphs()">
+      <option value="line">Line Graph</option>
+      <option value="scatter">Scatterplot</option>
+    </select>
     <div style="text-align:center">
       <svg id="lineGraphSVG">
         <g id="x-axis"></g>
         <g id="y-axis"></g>
         <g id="lines"></g>
+      </svg>
+      <svg id="scatterGraphSVG" style="display:none">
+        <g id="x-axis"></g>
+        <g id="y-axis"></g>
       </svg>
       <svg id="donutSVG"></svg>
     </div>

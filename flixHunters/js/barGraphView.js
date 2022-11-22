@@ -43,7 +43,7 @@ class BarGraphView {
 
     let maxCount = d3.max([...map1.values()].map(d => d.length))
 
-    console.log(map1)
+    //console.log(map1)
 
     this.xScale = d3.scaleLinear()
       .domain([0, maxCount])
