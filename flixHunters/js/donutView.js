@@ -6,6 +6,7 @@ class DonutView {
   height = 500;
   margin = 45;
   radius = 0;
+  lockedInRating = "";
   
   constructor(globalApplicationState) {
     this.globalApplicationState = globalApplicationState;
@@ -27,6 +28,8 @@ class DonutView {
   }
 
   adjustGraph(data){
+
+    let that = this;
 
      //transform data
     let groupedData = d3.group(data, d => d.rating );
@@ -59,74 +62,106 @@ class DonutView {
     .style("stroke-width", "2px")
     .attr("opacity", 1)
     .on('mouseover', function (d, i) {
-      /*
-      Interactive element here!
-      this.globalApplicationState.lineGraph.DoSomething();
-      */
+      if(that.lockedInRating == "")
+        that.globalApplicationState.plotGraphView.highlightRatings(i.data[0]);
       d3.select(this).transition()
-             .duration('50')
-             .attr('opacity', '.7');
+            .duration('50')
+            .attr('opacity', '.7');      
+    })
+    .on('click', function (d, i) {
+      if(that.lockedInRating != i.data[0]){
+        that.globalApplicationState.plotGraphView.highlightRatings(i.data[0]);
+        that.lockedInRating = i.data[0];
+        that.highlightSlice(i.data[0], data);
+        d3.select(this).transition()
+              .duration('50')
+              .attr('opacity', '.7');
+      }
+      else{
+        that.lockedInRating = "";
+        that.globalApplicationState.plotGraphView.unHighlightRatings();
+        that.unHighlightSlices(data);
+      }
     })
     .on('mouseout', function (d, i) {
-      /*
-      Interactive element here!
-      this.globalApplicationState.lineGraph.DoSomething();
-      */
+      if(that.lockedInRating == "")
+        that.globalApplicationState.plotGraphView.unHighlightRatings();
+
       d3.select(this).transition()
       .duration('50')
       .attr('opacity', '1');
     })
 
-    let that = this;
 
-    pieSVG
-    .selectAll('allPolylines')
-    .data(pieConverted)
-    .join('polyline')
-      .attr("stroke", "black")
-      .style("fill", "none")
-      .attr("stroke-width", 1)
-      .attr('points', function(d) {
-        const posA = arc.centroid(d) // line insertion in the slice
-        const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
-        const posC = outerArc.centroid(d); // Label position = almost the same as posB
-        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
-        posC[0] = that.radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-        if(d.data[0] == 'NR')
-        {
-          posC[0] = -posC[0];
-        }
-        return [posA, posB, posC]
-      })
+    // pieSVG
+    // .selectAll('allPolylines')
+    // .data(pieConverted)
+    // .join('polyline')
+    //   .attr("stroke", "black")
+    //   .style("fill", "none")
+    //   .attr("stroke-width", 1)
+    //   .attr('points', function(d) {
+    //     const posA = arc.centroid(d) // line insertion in the slice
+    //     const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+    //     const posC = outerArc.centroid(d); // Label position = almost the same as posB
+    //     const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+    //     posC[0] = that.radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+    //     if(d.data[0] == 'NR')
+    //     {
+    //       posC[0] = -posC[0];
+    //     }
+    //     return [posA, posB, posC]
+    //   })
 
-    pieSVG
-    .selectAll('allLabels')
-    .data(pieConverted)
-    .join('text')
-      .text(d => d.data[0])
-      .attr('transform', function(d) {
-          const pos = outerArc.centroid(d);
-          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-          pos[0] = that.radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-          if(d.data[0] == 'NR')
-        {
-          pos[0] = -pos[0] + 20;
-        }
+    // pieSVG
+    // .selectAll('allLabels')
+    // .data(pieConverted)
+    // .join('text')
+    //   .text(d => d.data[0])
+    //   .attr('transform', function(d) {
+    //       const pos = outerArc.centroid(d);
+    //       const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+    //       pos[0] = that.radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+    //       if(d.data[0] == 'NR')
+    //     {
+    //       pos[0] = -pos[0] + 20;
+    //     }
 
-          return `translate(${pos})`;
-      })
-      .style('text-anchor', function(d) {
-          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-          return (midangle < Math.PI ? 'start' : 'end')
-      })
+    //       return `translate(${pos})`;
+    //   })
+    //   .style('text-anchor', function(d) {
+    //       const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+    //       return (midangle < Math.PI ? 'start' : 'end')
+    //   })
 
     pieSVG.append('text').text(data.length)
+    .attr('id', 'donutTotal')
     .attr('transform','translate(-50,15)')
     .attr('font-size','3em');
 
 
     
  
+
+  }
+
+  highlightSlice(rating, data){
+    let pieSVG = d3.select('#donutSVG').select('g');
+
+    pieSVG
+    .selectAll('path')
+    .attr('fill', d => d.data[0] == rating ? this.globalApplicationState.colorScale(d.data[0]) : 'gray');
+
+    d3.select('#donutTotal').text(data.filter(d => d.rating == rating).length)
+  }
+
+  unHighlightSlices(data){
+    let pieSVG = d3.select('#donutSVG').select('g');
+
+    pieSVG
+    .selectAll('path')
+    .attr('fill', d => this.globalApplicationState.colorScale(d.data[0]))
+    d3.select('#donutTotal').text(data.length)
 
   }
 

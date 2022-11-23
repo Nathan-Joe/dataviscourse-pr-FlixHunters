@@ -76,10 +76,20 @@ class PlotGraphView {
     .on('mouseover', function(d,i) {
       console.log(i);
     })
-  ;
+  ;  
 
+  }
 
-    
+  highlightRatings(rating){
+    d3.select("#scatterGraphSVG").selectAll('circle')
+      .attr('fill', d => d.rating == rating ?  this.globalApplicationState.colorScale(d.rating) : 'gray')
+      .style("display", d => d.rating == rating ? 'initial' : 'none');
+  }
+
+  unHighlightRatings(){
+    d3.select("#scatterGraphSVG").selectAll('circle')
+    .attr('fill', d => this.globalApplicationState.colorScale(d.rating))
+    .style("display", 'initial');
 
   }
 
