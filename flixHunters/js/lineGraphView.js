@@ -1,7 +1,7 @@
 class LineGraphView {
 
   globalApplicationState;
-  width = 700;
+  width = 1200;
   height = 500;
   
   constructor(globalApplicationState) {
@@ -74,10 +74,13 @@ class LineGraphView {
       .attr('transform', `translate(${this.yAxisPadding},0)`)
       .call(d3.axisLeft(this.yScale));
     
-    this.adjustGraph(dataByRating);
+    this.adjustGraph();
   }
 
-  adjustGraph(data){
+  adjustGraph(){
+
+
+    let data = d3.group(this.globalApplicationState.filteredMovieData.filter(d => d.rating != 'NR'), d => d.rating)
     let keys = [...data.keys()]
     
     let ratingYearCount = new Map()
@@ -91,7 +94,7 @@ class LineGraphView {
     });
   
 
-    d3.select('#lines').selectAll('.lines')
+    d3.select('#lines').selectAll('path')
       .data(ratingYearCount)
       .join('path')
       .attr('fill', 'none')

@@ -47,7 +47,7 @@ async function loadData () {
       case "":
       case "UR":
       default:
-        movie.rating = "NR";
+        movie.rating = "R";
         break;
 
     }
@@ -65,6 +65,12 @@ async function loadData () {
   return moviesWithRatings;
 }
 
+function adjustAllGraphs(){
+  globalApplicationState.plotGraphView.adjustGraph();
+  globalApplicationState.lineGraphView.adjustGraph();
+  globalApplicationState.barGraphView.adjustGraph();
+}
+
 function toggleGraphs(){
   let graphToTurnOn = document.getElementById("graphToggle").value;
   if(graphToTurnOn == 'scatter'){
@@ -80,23 +86,29 @@ function toggleGraphs(){
 
 const globalApplicationState = {
   allMovieData : null,
+  filteredMovieData: null,
   donutView  : null,
   barGraphView  : null,
   lineGraphView  : null,
   plotGraphView : null,
-  colorScale: null
+  colorScale: null,
+  filteredMaturityList: [],
 };
 
 
 loadData().then((loadedData) => {
   // Store the loaded data into the globalApplicationState
   globalApplicationState.allMovieData = loadedData;
+  globalApplicationState.filteredMovieData = structuredClone(globalApplicationState.allMovieData);
+
 
   let categories = new Set(loadedData.map(x => x.rating));
   globalApplicationState.colorScale = d3.scaleOrdinal(d3.schemeDark2)
     .domain(categories);
 
-
+  for (const category of categories) {
+    globalApplicationState.filteredMaturityList.push(category);
+  }
 
   // Creates the view objects with the global state passed in 
   const barGraphView = new BarGraphView(globalApplicationState);
@@ -109,6 +121,7 @@ loadData().then((loadedData) => {
   globalApplicationState.donutView = donutView;
   globalApplicationState.lineGraphView = lineGraphView;
   globalApplicationState.plotGraphView = plotGraphView;
+
   
 });
 

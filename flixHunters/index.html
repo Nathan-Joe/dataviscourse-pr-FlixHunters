@@ -30,17 +30,17 @@
             <div>Names: Tayler Tolman, Albert Frei, Gregorius Sukiman</div>
         </header>
     </div>
-    <select name="graphType" id="graphToggle" onchange="toggleGraphs()">
-      <option value="line">Line Graph</option>
+    <select name="graphType" id="graphToggle" onchange="toggleGraphs()">   
       <option value="scatter">Scatterplot</option>
+      <option value="line">Line Graph</option>
     </select>
     <div style="text-align:center">
-      <svg id="lineGraphSVG">
+      <svg id="lineGraphSVG" style="display:none">
         <g id="x-axis"></g>
         <g id="y-axis"></g>
         <g id="lines"></g>
       </svg>
-      <svg id="scatterGraphSVG" style="display:none">
+      <svg id="scatterGraphSVG" >
         <g id="x-axis"></g>
         <g id="y-axis"></g>
       </svg>

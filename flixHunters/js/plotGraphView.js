@@ -1,7 +1,7 @@
 class PlotGraphView {
 
   globalApplicationState;
-  width = 700;
+  width = 1200;
   height = 500;
   
   constructor(globalApplicationState) {
@@ -64,13 +64,15 @@ class PlotGraphView {
     this.adjustGraph(this.globalApplicationState.allMovieData);
   }
 
-  adjustGraph(data){
+  adjustGraph(){
+
+    let data = this.globalApplicationState.filteredMovieData;
    
     d3.select("#scatterGraphSVG").selectAll('circle').data(data).join('circle')
               
     .attr('cx', (d) =>  this.xScale(parseFloat(d.release_year) + Math.random()/2 - .25))
     .attr('cy', (d) => this.yScale(parseFloat(d.score)))
-    .attr('r',  (d) =>  2)
+    .attr('r',  (d) =>  2.5)
     .attr('transform', `translate(${this.yAxisPadding},0)`)
     .attr('fill', d => this.globalApplicationState.colorScale(d.rating))
     .on('mouseover', function(d,i) {
@@ -80,17 +82,17 @@ class PlotGraphView {
 
   }
 
-  highlightRatings(rating){
-    d3.select("#scatterGraphSVG").selectAll('circle')
-      .attr('fill', d => d.rating == rating ?  this.globalApplicationState.colorScale(d.rating) : 'gray')
-      .style("display", d => d.rating == rating ? 'initial' : 'none');
-  }
+  // highlightRatings(rating){
+  //   d3.select("#scatterGraphSVG").selectAll('circle')
+  //     .attr('fill', d => d.rating == rating ?  this.globalApplicationState.colorScale(d.rating) : 'gray')
+  //     .style("display", d => d.rating == rating ? 'initial' : 'none');
+  // }
 
-  unHighlightRatings(){
-    d3.select("#scatterGraphSVG").selectAll('circle')
-    .attr('fill', d => this.globalApplicationState.colorScale(d.rating))
-    .style("display", 'initial');
+  // unHighlightRatings(){
+  //   d3.select("#scatterGraphSVG").selectAll('circle')
+  //   .attr('fill', d => this.globalApplicationState.colorScale(d.rating))
+  //   .style("display", 'initial');
 
-  }
+  // }
 
 }

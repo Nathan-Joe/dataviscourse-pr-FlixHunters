@@ -6,7 +6,6 @@ class DonutView {
   height = 500;
   margin = 45;
   radius = 0;
-  lockedInRating = "";
   
   constructor(globalApplicationState) {
     this.globalApplicationState = globalApplicationState;
@@ -23,11 +22,12 @@ class DonutView {
       .append('g')
       .attr('transform','translate(' + this.width/2 + ',' + this.height/2 + ")");
 
-      this.adjustGraph(this.globalApplicationState.allMovieData);
+      this.adjustGraph();
     
   }
 
-  adjustGraph(data){
+  adjustGraph(){
+    let data = this.globalApplicationState.filteredMovieData;
 
     let that = this;
 
@@ -62,31 +62,26 @@ class DonutView {
     .style("stroke-width", "2px")
     .attr("opacity", 1)
     .on('mouseover', function (d, i) {
-      if(that.lockedInRating == "")
-        that.globalApplicationState.plotGraphView.highlightRatings(i.data[0]);
       d3.select(this).transition()
             .duration('50')
             .attr('opacity', '.7');      
     })
     .on('click', function (d, i) {
-      if(that.lockedInRating != i.data[0]){
-        that.globalApplicationState.plotGraphView.highlightRatings(i.data[0]);
-        that.lockedInRating = i.data[0];
-        that.highlightSlice(i.data[0], data);
+      if(that.globalApplicationState.filteredMaturityList.includes(i.data[0])){
+        that.globalApplicationState.filteredMaturityList = that.globalApplicationState.filteredMaturityList.filter(x => x != i.data[0]);      
         d3.select(this).transition()
               .duration('50')
               .attr('opacity', '.7');
       }
       else{
-        that.lockedInRating = "";
-        that.globalApplicationState.plotGraphView.unHighlightRatings();
-        that.unHighlightSlices(data);
+        that.globalApplicationState.filteredMaturityList.push(i.data[0]);
       }
+      that.globalApplicationState.filteredMovieData = structuredClone(globalApplicationState.allMovieData).filter(d => that.globalApplicationState.filteredMaturityList.includes(d.rating));
+      adjustAllGraphs();
+      that.highlightSlice();
+
     })
     .on('mouseout', function (d, i) {
-      if(that.lockedInRating == "")
-        that.globalApplicationState.plotGraphView.unHighlightRatings();
-
       d3.select(this).transition()
       .duration('50')
       .attr('opacity', '1');
@@ -145,24 +140,17 @@ class DonutView {
 
   }
 
-  highlightSlice(rating, data){
+  highlightSlice(){
+    let data = this.globalApplicationState.filteredMovieData;
     let pieSVG = d3.select('#donutSVG').select('g');
+    let that = this;
 
     pieSVG
     .selectAll('path')
-    .attr('fill', d => d.data[0] == rating ? this.globalApplicationState.colorScale(d.data[0]) : 'gray');
+    .attr('fill', d => this.globalApplicationState.filteredMaturityList.includes(d.data[0]) ? this.globalApplicationState.colorScale(d.data[0]) : 'gray');
 
-    d3.select('#donutTotal').text(data.filter(d => d.rating == rating).length)
+    d3.select('#donutTotal').text(data.filter(d => that.globalApplicationState.filteredMaturityList.includes(d.rating)).length);
   }
 
-  unHighlightSlices(data){
-    let pieSVG = d3.select('#donutSVG').select('g');
-
-    pieSVG
-    .selectAll('path')
-    .attr('fill', d => this.globalApplicationState.colorScale(d.data[0]))
-    d3.select('#donutTotal').text(data.length)
-
-  }
 
 }
