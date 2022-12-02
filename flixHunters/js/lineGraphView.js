@@ -116,6 +116,32 @@ class LineGraphView {
           (values)
       })
 
+    d3.select('#lineGraphSVG').on('mousemove', (event) => {
+      let x = d3.pointer(event)[0];
+      if (x > 80 && x < 1090) 
+      {
+      // Set the line position
+      d3.select('#overlay')
+        .select('line')
+        .attr('stroke', 'black')
+        .attr('x1', x)
+        .attr('x2', x)
+        .attr('y1', 450)
+        .attr('y2', 0);
+  
+      d3.select('#overlay')
+      .selectAll('text')
+      .data(ratingYearCount)
+      .join('text')
+      .attr('id','text_remove')
+      .text(([group, values]) => `${group}`)
+      .attr('x', x)
+      .attr('y', (d, i) => 20*i + 20)
+      .attr('alignment-baseline', 'hanging')
+      .attr('fill', (d) => this.globalApplicationState.colorScale(d[0]))
+      .attr('text-anchor', x < 1200/2 ? "start" : "end");
+      }
+      });
   }
 
 }
