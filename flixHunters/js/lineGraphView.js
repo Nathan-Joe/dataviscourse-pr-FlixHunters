@@ -1,7 +1,6 @@
 class LineGraphView {
 
   globalApplicationState;
-  width = 1200;
   height = 500;
   
   constructor(globalApplicationState) {
@@ -15,28 +14,38 @@ class LineGraphView {
     this.xAxisPadding = 50;
   
     lineGraphSVG
-      .style('width',this.width)
+      .style('width','100%')
       .style('height',this.height)
 
-    
+    console.log(d3.select('#wrapper').clientWidth)
     let dataByYearAdded = d3.group(this.globalApplicationState.allMovieData, d => d.year_added)
     let dataByRating = d3.group(this.globalApplicationState.allMovieData.filter(d => d.rating != 'NR'), d => d.rating)
-
+    
     let keys = [...dataByRating.keys()]
     
     let ratingYearCount = new Map()
-    
+    let maxByRating = []
+
+
     keys.forEach(key => {
       let byYear = d3.group(dataByRating.get(key), d => d.year_added)
       ratingYearCount.set(key, byYear)
+      let maxByYear = []
+      let ratingByYear = ratingYearCount.get(key)
+      let years = [...ratingByYear.keys()]
+      years.forEach(year => {
+        let moviesThatYear = ratingByYear.get(year)
+        maxByRating.push(moviesThatYear.length)
+      })
     });
 
-    //console.log(ratingYearCount)
+    let maxCountOfMovies = d3.max(maxByRating)
+    
+
     
     this.xScale = d3.scaleTime()
       .domain(d3.extent([...dataByYearAdded.keys()].map(d => new Date(d))))
-      //.domain([new Date('2013'), new Date('2021')])
-      .range([0, this.width - this.yAxisPadding - 1])
+      .range([0, 1200 - this.yAxisPadding - 1])
 
     
     lineGraphSVG.select('#x-axis')
@@ -63,10 +72,9 @@ class LineGraphView {
     let maxCount = d3.max([...dataByRating.values()].map(d => d.length))
 
     let test = [...dataByRating.values()].map( d => d3.group(d, n => n.year_added))
-    console.log(test)
     
     this.yScale = d3.scaleLinear()
-      .domain([0, 800])
+      .domain([0, maxCountOfMovies])
       .range([this.height - this.xAxisPadding, 10])
       .nice();
     lineGraphSVG.select('#y-axis')
@@ -101,7 +109,6 @@ class LineGraphView {
       .attr('stroke', d => this.globalApplicationState.colorScale(d[0]))
       .attr('stroke-width', 3)
       .attr('d', ([group, values]) => {
-        //console.log(values)
         return d3.line()
           .x(d => this.xScale(new Date(d[0])) + this.yAxisPadding) 
         //.x(d => this.xScale(new Date(d.year)) + this.yAxisPadding)

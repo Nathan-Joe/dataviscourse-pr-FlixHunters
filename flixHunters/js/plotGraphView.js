@@ -15,7 +15,7 @@ class PlotGraphView {
     this.xAxisPadding = 50;
   
     lineGraphSVG
-      .style('width',this.width)
+      .style('width','100%')
       .style('height',this.height)
 
 
