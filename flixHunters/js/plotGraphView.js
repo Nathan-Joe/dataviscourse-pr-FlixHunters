@@ -37,7 +37,7 @@ class PlotGraphView {
       lineGraphSVG.select('#x-axis')
       .append('text')
       .text('Year Released')
-      .attr('x', 350)
+      .attr('x', 520)
       .attr('y', this.height - 10);
       
 
