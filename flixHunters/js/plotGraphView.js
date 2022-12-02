@@ -66,6 +66,9 @@ class PlotGraphView {
 
   adjustGraph(){
 
+    d3.select("body").append("div").attr("id","tooltip")
+    .style("opacity", 0);
+
     let data = this.globalApplicationState.filteredMovieData;
    
     d3.select("#scatterGraphSVG").selectAll('circle').data(data).join('circle')
@@ -75,10 +78,28 @@ class PlotGraphView {
     .attr('r',  (d) =>  2.5)
     .attr('transform', `translate(${this.yAxisPadding},0)`)
     .attr('fill', d => this.globalApplicationState.colorScale(d.rating))
+    .attr("stroke-width","1")
+    .attr("stroke","black")
     .on('mouseover', function(d,i) {
+      d3.select("#tooltip").transition()
+      .duration(150)
+      .style("opacity", .9)
+      d3.select("#tooltip")
+      .html("<b>Title:</b> " + i.title + "<br>" + "<b>Director:</b> " + i.director + "<br>" + "<b>Country:</b> " + i.country + "<br>" + "<b>Duration:</b> " + i.duration + "<br>"
+      + "<b>Rating:</b> " + i.rating + "<br>" + "<b>Score:</b> " + i.score + "<br>")
+      .style("position", "absolute")
+      .style("background","lightsteelblue")
+      .style("text-align","center")
+      .style("border-radius", "4px")
+      .style("left", d.pageX + "px")
+      .style("top", (d.pageY+15) + "px");
       console.log(i);
     })
-  ;  
+    .on("mouseout", function(){
+      d3.select("#tooltip").transition()
+      .duration(300)
+      .style("opacity", 0);
+    });  
 
   }
 
