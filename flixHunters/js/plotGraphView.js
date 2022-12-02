@@ -124,8 +124,10 @@ class PlotGraphView {
     .append("circle")
     .attr("cx", 100)
     .attr("cy", function(d,i){ return 365 + i*25})
-    .attr("r", 7)
+    .attr("r", 4)
     .style("fill", d => this.globalApplicationState.colorScale(d))
+    .attr("stroke-width","1")
+    .attr("stroke","black")
 
     svg.selectAll("mylabels")
     .data(ratings)
