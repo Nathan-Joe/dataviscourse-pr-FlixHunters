@@ -81,10 +81,12 @@ class BarGraphView {
       .data(map1)
       .join('rect')
       .attr("x", 130)
-      .attr("y", ([group, values]) => this.yScale(group)-32)
+      .attr("y", ([group, values]) => this.yScale(group)-this.xAxisPadding)
       .attr("width", ([group, values]) => this.xScale([values].map(d => d.length)))
-      .attr("height", 15)
+      .attr("height", this.yScale.bandwidth())
       .attr("fill", "#E50914")
+      .attr("stroke-width","1")
+      .attr("stroke","black")
 
   }
 
