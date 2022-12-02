@@ -70,7 +70,13 @@ class PlotGraphView {
     .style("opacity", 0);
 
     let data = this.globalApplicationState.filteredMovieData;
-   
+
+    let ratings = new Set();
+    data.forEach(d => {
+      ratings.add(d.rating)
+    });
+    console.log(ratings)
+
     d3.select("#scatterGraphSVG").selectAll('circle').data(data).join('circle')
               
     .attr('cx', (d) =>  this.xScale(parseFloat(d.release_year) + Math.random()/2 - .25))
@@ -100,6 +106,38 @@ class PlotGraphView {
       .duration(300)
       .style("opacity", 0);
     });  
+
+    let svg = d3.select("#scatterGraphSVG")
+
+    let borderPath = svg.append("rect")
+    .attr("x", 81)
+    .attr("y", 345)
+    .attr("height", 105)
+    .attr("width", 100)
+    .attr("stroke-width","1")
+    .attr("stroke","black")
+    .style("fill", "#F0FFFF")
+
+    svg.selectAll("mydots")
+    .data(ratings)
+    .enter()
+    .append("circle")
+    .attr("cx", 100)
+    .attr("cy", function(d,i){ return 365 + i*25})
+    .attr("r", 7)
+    .style("fill", d => this.globalApplicationState.colorScale(d))
+
+    svg.selectAll("mylabels")
+    .data(ratings)
+    .enter()
+    .append("text")
+    .attr("x", 120)
+    .attr("y", function(d,i){ return 365 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+    .style("fill", d => this.globalApplicationState.colorScale(d))
+    .text(function(d){ return d})
+    .attr("text-anchor", "left")
+    .style("alignment-baseline", "middle")
+
 
   }
 
