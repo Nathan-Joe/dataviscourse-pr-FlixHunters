@@ -28,6 +28,16 @@
       align-self: center;
       margin-left: 5%;
     }
+    #graphDonut {
+      display: inline-flex;
+      align-items: left;
+      width: 100%;
+    }
+    #donutSVG {
+      position: relative;
+      margin-top: 80px;
+      
+    }
   </style>
   
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -57,17 +67,19 @@
         <option value="scatter">Scatterplot</option>
         <option value="line">Line Graph</option> 
       </select>
-      <div style="text-align:center">
-        <svg id="lineGraphSVG" style="display:none">
-          <g id="x-axis"></g>
-          <g id="y-axis"></g>
-          <g id="lines"></g>
-        </svg>
-        <svg id="scatterGraphSVG" >
-          <g id="x-axis"></g>
-          <g id="y-axis"></g>
-        </svg>
-        <svg id="donutSVG"></svg>
+      <div>
+        <div id="graphDonut">
+          <svg id="lineGraphSVG" style="display:none">
+            <g id="x-axis"></g>
+            <g id="y-axis"></g>
+            <g id="lines"></g>
+          </svg>
+          <svg id="scatterGraphSVG" >
+            <g id="x-axis"></g>
+            <g id="y-axis"></g>
+          </svg>
+          <svg id="donutSVG"></svg>
+        </div>
       </div>
       <div style="text-align:center">
         <svg id="barGraphSVG">

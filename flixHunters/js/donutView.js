@@ -2,14 +2,14 @@
 class DonutView {
 
   globalApplicationState;
-  width = 500;
-  height = 500;
+  width = 300;
+  height = 300;
   margin = 45;
   radius = 0;
   
   constructor(globalApplicationState) {
     this.globalApplicationState = globalApplicationState;
-    this.radius = Math.min(this.width,this.height)/2 - this.margin;
+    this.radius = Math.min(this.width,this.height)/2 ;
     this.setup();
   }
 

@@ -1,7 +1,7 @@
 class PlotGraphView {
 
   globalApplicationState;
-  width = 1200;
+  width = 1100;
   height = 500;
   
   constructor(globalApplicationState) {
@@ -15,7 +15,7 @@ class PlotGraphView {
     this.xAxisPadding = 50;
   
     lineGraphSVG
-      .style('width','100%')
+      .style('width','80%')
       .style('height',this.height)
 
 

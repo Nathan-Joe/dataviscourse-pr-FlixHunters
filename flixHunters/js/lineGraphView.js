@@ -14,7 +14,7 @@ class LineGraphView {
     this.xAxisPadding = 50;
   
     lineGraphSVG
-      .style('width','100%')
+      .style('width','80%')
       .style('height',this.height)
 
     console.log(d3.select('#wrapper').clientWidth)
@@ -45,7 +45,7 @@ class LineGraphView {
     
     this.xScale = d3.scaleTime()
       .domain(d3.extent([...dataByYearAdded.keys()].map(d => new Date(d))))
-      .range([0, 1200 - this.yAxisPadding - 1])
+      .range([0, 1080 - this.yAxisPadding - 1])
 
     
     lineGraphSVG.select('#x-axis')

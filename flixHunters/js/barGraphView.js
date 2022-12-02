@@ -84,7 +84,7 @@ class BarGraphView {
       .attr("y", ([group, values]) => this.yScale(group)-32)
       .attr("width", ([group, values]) => this.xScale([values].map(d => d.length)))
       .attr("height", 15)
-      .attr("fill", "#69b3a2")
+      .attr("fill", "#E50914")
 
   }
 

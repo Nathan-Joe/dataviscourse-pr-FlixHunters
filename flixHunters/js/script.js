@@ -103,7 +103,7 @@ loadData().then((loadedData) => {
 
 
   let categories = new Set(loadedData.map(x => x.rating));
-  globalApplicationState.colorScale = d3.scaleOrdinal(d3.schemeDark2)
+  globalApplicationState.colorScale = d3.scaleOrdinal([`#B2B09B`, `#28AFB0`, `#E50914`,   `#E3B505`, `#F4D6CC`])
     .domain(categories);
 
   for (const category of categories) {
