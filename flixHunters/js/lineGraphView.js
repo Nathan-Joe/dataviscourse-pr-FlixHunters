@@ -120,7 +120,7 @@ class LineGraphView {
 
     d3.select('#lineGraphSVG').on('mousemove', (event) => {
       let x = d3.pointer(event)[0];
-      if (x > 80 && x < 1090) 
+      if (x > 80 && x < 1082) 
       {
         const year = `${this.xScale.invert(x).getFullYear()}`;
         console.log(ratingYearCount)
@@ -137,7 +137,8 @@ class LineGraphView {
           .attr('x1', x)
           .attr('x2', x)
           .attr('y1', 450)
-          .attr('y2', 0);
+          .attr('y2', 0)
+          .style("opacity",1);
     
         d3.select('#overlay')
           .selectAll('text')
@@ -149,7 +150,15 @@ class LineGraphView {
           .attr('y', (d, i) => 20*i + 20)
           .attr('alignment-baseline', 'hanging')
           .attr('fill', (d) => this.globalApplicationState.colorScale(d[0]))
-          .attr('text-anchor', x < 1200/2 ? "start" : "end");
+          .attr('text-anchor', x < 1200/2 ? "start" : "end")
+          .style("opacity",1);
+      }
+      if(x>1083)
+      {
+        d3.select("#overlay")
+          .select('line').style("opacity",0);
+        d3.select("#overlay")
+          .selectAll('text').style("opacity",0);
       }
       });
   }
