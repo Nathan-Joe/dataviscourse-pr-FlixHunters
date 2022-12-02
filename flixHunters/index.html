@@ -8,9 +8,9 @@
       font-family: sans-serif;
     }
     body {
-      background-image: linear-gradient(90deg, rgba(229,9,20,1) 5%, rgba(0, 0, 0, 1) 95%);
+      background-image: linear-gradient(180deg, rgba(229,9,20,1) 10%, rgba(30, 0, 0, 1) 90%);
       
-      padding: 10px;
+      padding: 20px;
     }
     #wrapper {
       background-color: white;
@@ -48,6 +48,7 @@
   <script src="js/script.js"></script>
   <script src="js/donutView.js"></script>
   <script src="js/plotGraphView.js"></script>
+  <script src="js/boxAndWhiskerGraphView.js"></script>
 
   
 
@@ -80,13 +81,19 @@
           </svg>
           <svg id="donutSVG"></svg>
         </div>
-      </div>
-      <div style="text-align:center">
-        <svg id="barGraphSVG">
-          <g id="xbar-axis"></g>
-          <g id="ybar-axis"></g>
-          <g id="bars"></g>
-        </svg>
+      
+        <div style="text-align:center">
+          <svg id="barGraphSVG">
+            <g id="xbar-axis"></g>
+            <g id="ybar-axis"></g>
+            <g id="bars"></g>
+          </svg>
+          <svg id="boxWhiskerSVG">
+            <g id="x-axis"></g>
+            <g id="y-axis"></g>
+          </svg>
+        </div>
+
       </div>
     </div>
   

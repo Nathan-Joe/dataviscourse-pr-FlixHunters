@@ -69,6 +69,7 @@ function adjustAllGraphs(){
   globalApplicationState.plotGraphView.adjustGraph();
   globalApplicationState.lineGraphView.adjustGraph();
   globalApplicationState.barGraphView.adjustGraph();
+  globalApplicationState.boxAndWhiskerGraphView.adjustGraph();
 }
 
 function toggleGraphs(){
@@ -91,6 +92,7 @@ const globalApplicationState = {
   barGraphView  : null,
   lineGraphView  : null,
   plotGraphView : null,
+  boxAndWhiskerGraphView : null,
   colorScale: null,
   filteredMaturityList: [],
 };
@@ -115,13 +117,14 @@ loadData().then((loadedData) => {
   const donutView = new DonutView(globalApplicationState);
   const lineGraphView = new LineGraphView(globalApplicationState);
   const plotGraphView = new PlotGraphView(globalApplicationState);
+  const boxAndWhiskerGraphView = new BoxAndWhiskerGraphView(globalApplicationState);
   
 
   globalApplicationState.barGraphView = barGraphView;
   globalApplicationState.donutView = donutView;
   globalApplicationState.lineGraphView = lineGraphView;
   globalApplicationState.plotGraphView = plotGraphView;
-
+  globalApplicationState.boxAndWhiskerGraphView = boxAndWhiskerGraphView;
   
 });
 
