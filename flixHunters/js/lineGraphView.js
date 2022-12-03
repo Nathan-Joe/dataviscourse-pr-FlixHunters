@@ -156,9 +156,11 @@ class LineGraphView {
       if(x>1083)
       {
         d3.select("#overlay")
-          .select('line').style("opacity",0);
+          .select('line')
+          .style("opacity",0);
         d3.select("#overlay")
-          .selectAll('text').style("opacity",0);
+          .selectAll('text')
+          .style("opacity",0);
       }
       });
   }

@@ -43,7 +43,7 @@ class BarGraphView {
 
     let maxCount = d3.max([...map1.values()].map(d => d.length))
 
-    //console.log(map1)
+    console.log(map1)
 
     this.xScale = d3.scaleLinear()
       .domain([0, maxCount])
@@ -57,7 +57,8 @@ class BarGraphView {
 
     this.yScale = d3.scaleBand()
       .domain([...map1.keys()].map(d => d))
-      .range([this.yAxisPadding, this.height]);
+      .range([this.yAxisPadding, this.height])
+      .padding(0.2);
     
     d3.select('#ybar-axis')
     .append('g')
