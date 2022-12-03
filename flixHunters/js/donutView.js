@@ -2,8 +2,8 @@
 class DonutView {
 
   globalApplicationState;
-  width = 300;
-  height = 300;
+  width = 600;
+  height = 600;
   margin = 45;
   radius = 0;
   
@@ -147,7 +147,7 @@ class DonutView {
 
     pieSVG
     .selectAll('path')
-    .attr('fill', d => this.globalApplicationState.filteredMaturityList.includes(d.data[0]) ? this.globalApplicationState.colorScale(d.data[0]) : 'gray');
+    .attr('fill', d => this.globalApplicationState.filteredMaturityList.includes(d.data[0]) ? this.globalApplicationState.colorScale(d.data[0]) : 'black');
 
     d3.select('#donutTotal').text(data.filter(d => that.globalApplicationState.filteredMaturityList.includes(d.rating)).length);
   }
