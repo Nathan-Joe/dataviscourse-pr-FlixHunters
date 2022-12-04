@@ -2,8 +2,8 @@
 class DonutView {
 
   globalApplicationState;
-  width = 600;
-  height = 600;
+  width = 450;
+  height = 350;
   margin = 45;
   radius = 0;
   
