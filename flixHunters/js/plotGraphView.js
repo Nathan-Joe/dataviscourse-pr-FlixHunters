@@ -75,7 +75,6 @@ class PlotGraphView {
     data.forEach(d => {
       ratings.add(d.rating)
     });
-    console.log(ratings)
 
     d3.select("#scatterGraphSVG").selectAll('circle').data(data).join('circle')
               

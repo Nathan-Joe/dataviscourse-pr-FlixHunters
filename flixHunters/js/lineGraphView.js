@@ -17,7 +17,6 @@ class LineGraphView {
       .style('width','80%')
       .style('height',this.height)
 
-    console.log(d3.select('#wrapper').clientWidth)
     let dataByYearAdded = d3.group(this.globalApplicationState.allMovieData, d => d.year_added)
     let dataByRating = d3.group(this.globalApplicationState.allMovieData.filter(d => d.rating != 'NR'), d => d.rating)
     
@@ -102,8 +101,6 @@ class LineGraphView {
     });
   
 
-    console.log(ratingYearCount)
-    console.log(ratingYearCount)
     d3.select('#lines').selectAll('path')
       .data(ratingYearCount)
       .join('path')
