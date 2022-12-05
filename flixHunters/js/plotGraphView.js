@@ -112,10 +112,10 @@ class PlotGraphView {
     let borderPath = svg.append("rect")
     .attr("x", 81)
     .attr("y", 345)
-    .attr("height", 105)
+    .attr("height", 103)
     .attr("width", 100)
-    .style("fill", "#28AFB0")
-    .style("opacity", 0.15)
+    .style("fill", "#FAF9F6")
+    .style("opacity", 1)
 
     svg.selectAll("mydots")
     .data(ratings)
