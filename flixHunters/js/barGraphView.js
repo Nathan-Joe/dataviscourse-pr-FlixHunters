@@ -90,6 +90,8 @@ class BarGraphView {
       .attr("fill", "#E50914")
       .attr("stroke-width","1")
       .attr("stroke","black")
+    
+    d3.select('#bars').selectAll('rect')
       .on('mouseover', function(d,i) {
         let title_rates = ""
         i[1].forEach(element => {
@@ -182,11 +184,15 @@ class BarGraphView {
     .join('rect')
     .attr("x", 130)
     .attr("y", ([group, values]) => this.yScale(group)-this.xAxisPadding)
+    .transition()
     .attr("width", ([group, values]) => this.xScale([values].map(d => d.length)))
     .attr("height", this.yScale.bandwidth())
+    .duration(1000)
     .attr("fill", "#E50914")
     .attr("stroke-width","1")
     .attr("stroke","black")
+    
+  d3.select('#bars').selectAll('rect')
     .on('mouseover', function(d,i) {
       let title_rates = ""
       i[1].forEach(element => {
