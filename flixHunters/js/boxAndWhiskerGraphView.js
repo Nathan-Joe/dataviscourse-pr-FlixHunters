@@ -43,8 +43,14 @@ class BoxAndWhiskerGraphView {
 
             boxPlots.push(boxPlot)
         })
-        
-        let subArray = boxPlots.slice(0, 5)
+        console.log(boxPlots)
+        let subArray = []
+        subArray.push(boxPlots[2])
+        subArray.push(boxPlots[5])
+        subArray.push(boxPlots[7])
+        subArray.push(boxPlots[9])
+        subArray.push(boxPlots[10])
+        //boxPlots.slice(0, 5)
         console.log(subArray)
         var svg = d3.select("#boxWhiskerSVG")
             .attr("width", '50%')
