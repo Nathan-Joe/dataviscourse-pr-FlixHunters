@@ -30,8 +30,8 @@ class BarGraphView {
     for (let [key, value] of mapSort1.entries()) {
       //console.log(key, value);
       if(count<10 && key != ""){
-        //map1.set(key,value)
-        map1.set(key,d3.rollup(value, v => v.length, d => d.rating))
+        map1.set(key,value)
+        //map1.set(key,d3.rollup(value, v => v.length, d => d.rating))
         count++
         //console.log(d3.rollup(value, v => v.length, d => d.rating))
         //console.log(value)
