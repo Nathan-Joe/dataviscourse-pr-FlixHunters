@@ -73,14 +73,19 @@ class PlotGraphView {
     });
 
     d3.select("#scatterGraphSVG").selectAll('circle').data(data).join('circle')
-              
-    .attr('cx', (d) =>  this.xScale(parseFloat(d.release_year) + Math.random()/2 - .25))
-    .attr('cy', (d) => this.yScale(parseFloat(d.score)))
     .attr('r',  (d) =>  2.5)
     .attr('transform', `translate(${this.yAxisPadding},0)`)
     .attr('fill', d => this.globalApplicationState.colorScale(d.rating))
     .attr("stroke-width","1")
     .attr("stroke","black")
+    .attr('cx', this.width/2)
+    .attr('cy', this.height/2)
+    .transition()
+    .attr('cx', (d) =>  this.xScale(parseFloat(d.release_year) + Math.random()/2 - .25))
+    .attr('cy', (d) => this.yScale(parseFloat(d.score)))
+    .duration(1000)
+
+    d3.select("#scatterGraphSVG").selectAll('circle')
     .on('mouseover', function(d,i) {
       d3.select("#tooltip").transition()
       .duration(150)
@@ -89,7 +94,7 @@ class PlotGraphView {
       .html("<b>Title:</b> " + i.title + "<br>" + "<b>Director:</b> " + i.director + "<br>" + "<b>Casts:</b> " + i.cast + "<br>" + "<b>Country:</b> " + i.country + "<br>" + "<b>Duration:</b> " + i.duration + "<br>"
       + "<b>Rating:</b> " + i.rating + "<br>" + "<b>Score:</b> " + i.score + "<br>")
       .style("position", "absolute")
-      .style("background","lightsteelblue")
+      .style("background","#28AFB0")
       .style("text-align","center")
       .style("border-radius", "4px")
       .style("left", d.pageX + "px")
@@ -109,9 +114,8 @@ class PlotGraphView {
     .attr("y", 345)
     .attr("height", 105)
     .attr("width", 100)
-    .attr("stroke-width","1")
-    .attr("stroke","black")
-    .style("fill", "#F0FFFF")
+    .style("fill", "#28AFB0")
+    .style("opacity", 0.15)
 
     svg.selectAll("mydots")
     .data(ratings)
