@@ -48,10 +48,6 @@ class PlotGraphView {
       .attr('y', 30)
       .attr('transform', 'rotate(-90)');
 
-    
-
-  
-    
     this.yScale = d3.scaleLinear()
       .domain([0, 10])
       .range([this.height - this.xAxisPadding, 10])

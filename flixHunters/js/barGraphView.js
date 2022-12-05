@@ -30,8 +30,11 @@ class BarGraphView {
     for (let [key, value] of mapSort1.entries()) {
       //console.log(key, value);
       if(count<10 && key != ""){
-        map1.set(key,value)
+        //map1.set(key,value)
+        map1.set(key,d3.rollup(value, v => v.length, d => d.rating))
         count++
+        //console.log(d3.rollup(value, v => v.length, d => d.rating))
+        //console.log(value)
       }
       else if(key == "") {
         continue
@@ -40,7 +43,7 @@ class BarGraphView {
         break
       }
     }
-
+    console.log(map1)
     let maxCount = d3.max([...map1.values()].map(d => d.length))
 
 
@@ -77,7 +80,6 @@ class BarGraphView {
       .attr('y', 20)
       .attr('transform', 'rotate(-90)');
 
-    console.log(map1)
 
     d3.select('#bars').selectAll('rect')
       .data(map1)
