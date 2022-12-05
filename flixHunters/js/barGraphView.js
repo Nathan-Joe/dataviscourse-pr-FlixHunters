@@ -15,7 +15,7 @@ class BarGraphView {
     this.xAxisPadding = 50;
     
     barGraphSVG
-      .style('width','100%')
+      .style('width','50%')
       .style('height',this.height)
 
     //console.log(this.globalApplicationState.allMovieData)

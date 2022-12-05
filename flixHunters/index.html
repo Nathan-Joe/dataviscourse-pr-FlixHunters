@@ -38,6 +38,11 @@
       margin-top: 80px;
       
     }
+    #barBox {
+      display: inline-flex;
+      align-items: right;
+      width: 100%;
+    }
   </style>
   
   <script src="https://d3js.org/d3.v7.min.js"></script>
@@ -83,7 +88,7 @@
           <svg id="donutSVG"></svg>
         </div>
       
-        <div style="text-align:center">
+        <div id="barBox" style="text-align:center">
           <svg id="barGraphSVG">
             <g id="xbar-axis"></g>
             <g id="ybar-axis"></g>
@@ -92,6 +97,7 @@
           <svg id="boxWhiskerSVG">
             <g id="x-axis"></g>
             <g id="y-axis"></g>
+            <g id="plots"></g>
           </svg>
         </div>
 
