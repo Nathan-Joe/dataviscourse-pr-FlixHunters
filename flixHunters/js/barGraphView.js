@@ -105,7 +105,7 @@ class BarGraphView {
         d3.select("#tooltip")
           .html("<b>Movies made by the Director:</b> " + "<br>" + title_rates)
           .style("position", "absolute")
-          .style("background","lightsteelblue")
+          .style("background","#28AFB0")
           .style("text-align","center")
           .style("border-radius", "4px")
           .style("left", d.pageX + "px")
