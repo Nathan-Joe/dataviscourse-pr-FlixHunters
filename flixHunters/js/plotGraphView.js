@@ -90,7 +90,7 @@ class PlotGraphView {
       .duration(150)
       .style("opacity", .9)
       d3.select("#tooltip")
-      .html("<b>Title:</b> " + i.title + "<br>" + "<b>Director:</b> " + i.director + "<br>" + "<b>Country:</b> " + i.country + "<br>" + "<b>Duration:</b> " + i.duration + "<br>"
+      .html("<b>Title:</b> " + i.title + "<br>" + "<b>Director:</b> " + i.director + "<br>" + "<b>Casts:</b> " + i.cast + "<br>" + "<b>Country:</b> " + i.country + "<br>" + "<b>Duration:</b> " + i.duration + "<br>"
       + "<b>Rating:</b> " + i.rating + "<br>" + "<b>Score:</b> " + i.score + "<br>")
       .style("position", "absolute")
       .style("background","lightsteelblue")

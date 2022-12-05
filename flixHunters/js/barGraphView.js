@@ -93,7 +93,6 @@ class BarGraphView {
         let title_rates = ""
         i[1].forEach(element => {
           title_rates = title_rates + element.title + " <b>("+ element.rating + ")</b>" + "<br>" 
-          //console.log(stemp)
         });
         d3.select(this).transition()
             .duration('50')
