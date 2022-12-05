@@ -1,6 +1,7 @@
 class LineGraphView {
 
   globalApplicationState;
+  width = 1000;
   height = 500;
   
   constructor(globalApplicationState) {
@@ -14,7 +15,7 @@ class LineGraphView {
     this.xAxisPadding = 50;
   
     lineGraphSVG
-      .style('width','80%')
+      .style('width','75%')
       .style('height',this.height)
 
     let dataByYearAdded = d3.group(this.globalApplicationState.allMovieData, d => d.year_added)
@@ -44,7 +45,7 @@ class LineGraphView {
     
     this.xScale = d3.scaleTime()
       .domain(d3.extent([...dataByYearAdded.keys()].map(d => new Date(d))))
-      .range([0, 1080 - this.yAxisPadding - 1])
+      .range([0, this.width - this.yAxisPadding - 1])
 
     
     lineGraphSVG.select('#x-axis')
@@ -150,7 +151,7 @@ class LineGraphView {
           .attr('text-anchor', x < 1200/2 ? "start" : "end")
           .style("opacity",1);
       }
-      if(x>1083)
+      if(x > this.width)
       {
         d3.select("#overlay")
           .select('line')

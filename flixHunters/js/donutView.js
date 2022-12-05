@@ -2,7 +2,7 @@
 class DonutView {
 
   globalApplicationState;
-  width = 450;
+  width = 350;
   height = 350;
   margin = 45;
   radius = 0;
@@ -17,7 +17,7 @@ class DonutView {
     let donutSVG = d3.select("#donutSVG");
   
     donutSVG
-      .style('width',this.width)
+      .style('width','25%')
       .style('height',this.height)
       .append('g')
       .attr('transform','translate(' + this.width/2 + ',' + this.height/2 + ")");
