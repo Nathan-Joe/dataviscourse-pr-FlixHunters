@@ -77,6 +77,8 @@ class BarGraphView {
       .attr('y', 20)
       .attr('transform', 'rotate(-90)');
 
+    console.log(map1)
+
     d3.select('#bars').selectAll('rect')
       .data(map1)
       .join('rect')
@@ -87,6 +89,36 @@ class BarGraphView {
       .attr("fill", "#E50914")
       .attr("stroke-width","1")
       .attr("stroke","black")
+      .on('mouseover', function(d,i) {
+        let title_rates = ""
+        i[1].forEach(element => {
+          title_rates = title_rates + element.title + " <b>("+ element.rating + ")</b>" + "<br>" 
+          //console.log(stemp)
+        });
+        d3.select(this).transition()
+            .duration('50')
+            .attr('opacity', '.7')
+        d3.select("#tooltip").transition()
+          .duration(150)
+          .style("opacity", .9)
+        d3.select("#tooltip")
+          .html("<b>Movies made by the Director:</b> " + "<br>" + title_rates)
+          .style("position", "absolute")
+          .style("background","lightsteelblue")
+          .style("text-align","center")
+          .style("border-radius", "4px")
+          .style("left", d.pageX + "px")
+          .style("top", (d.pageY+15) + "px")
+          //console.log(i)
+      })
+      .on('mouseout', function (d, i) {
+        d3.select(this).transition()
+        .duration('50')
+        .attr('opacity', '1');
+        d3.select("#tooltip").transition()
+        .duration(300)
+        .style("opacity", 0);
+      })
 
   }
 
